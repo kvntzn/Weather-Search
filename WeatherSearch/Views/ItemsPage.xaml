@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:control="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             mc:Ignorable="d"
+             x:Class="WeatherSearch.Views.ItemsPage"
+             xmlns:renderedViews="clr-namespace:Sharpnado.Presentation.Forms.RenderedViews;assembly=Sharpnado.Presentation.Forms"
+             xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
+             Title="{Binding Title}"
+             NavigationPage.HasNavigationBar="False"
+             ControlTemplate="{StaticResource PageWithGradient}"
+             x:Name="BrowseItemsPage">
+    <ScrollView>
+        <StackLayout>
+            <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="70*"/>
+                        <ColumnDefinition Width="15*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="0" VerticalOptions="Center">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSearchBarIconTapped"/>
+                        </StackLayout.GestureRecognizers>
+                        <control:TintedImage Source="ic_action_search" TintColor="White" />
+                    </StackLayout>
+
+                    <StackLayout  Grid.Column="1" HeightRequest="50">
+                        <SearchBar
+                            x:Name="SearchBar"
+                            IsVisible="{Binding IsSearchBarActive}"
+                            PlaceholderColor="#ffffff"
+                            SearchCommand="{Binding SearchCommand}"
+                            Text="{Binding SearchInput}"
+                            TextColor="White"
+                            Unfocused="OnSearchBarUnfocused"
+                	        FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="Start"
+                        />
+                    </StackLayout>
+
+                    <StackLayout Grid.Column="2" VerticalOptions="Center" Padding="0,0,10,0" >
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToHistoryCommand}"/>
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="ic_more_vertical" />
+                    </StackLayout>
+                </Grid>
+
+            <StackLayout Padding="0,0,0,40" IsVisible="{Binding SearchResultVisibility}">
+                <StackLayout >
+                    <Label Text="{Binding HomepageCurrentWeatherData.name}" FontSize="Title" HorizontalTextAlignment="Center" Margin="50,20" Style="{StaticResource Main}" FontFamily="{StaticResource BoldFont}"
+                           sk:Skeleton.IsBusy="{Binding IsBusy}"
+                           sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                       sk:Skeleton.BackgroundColor="#3b3b3b"/>
+
+                    <StackLayout Padding="0" Spacing="0">
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+                             sk:Skeleton.IsBusy="{Binding IsBusy}"
+                             sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                         sk:Skeleton.BackgroundColor="#3b3b3b">
+                            <Image Source="{Binding HomepageCurrentWeatherData.iconurl}" HeightRequest="100" WidthRequest="100" />
+                        </StackLayout>
+                        <Grid Margin="20"
+                                      sk:Skeleton.IsBusy="{Binding IsBusy}"
+                                      sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                                  sk:Skeleton.BackgroundColor="#3b3b3b">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80*"/>
+                                <ColumnDefinition Width="20*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding HomepageCurrentWeatherData.temp_string}" FontSize="Header" Style="{StaticResource Main}"  FontFamily="{StaticResource LightFont}"/>
+                            <Label Grid.Column="1" Text="{Binding HomepageCurrentWeatherData.weather_description}" FontSize="Medium" VerticalOptions="Center" Style="{StaticResource Main}" FontFamily="{StaticResource MediumFont}" LineBreakMode="WordWrap"/>
+                        </Grid>
+                        <Label 
+                                Margin="25,0"
+                                sk:Skeleton.IsBusy="{Binding IsBusy}"
+                                sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                            sk:Skeleton.BackgroundColor="#3b3b3b"
+                                VerticalTextAlignment="Center"
+                                Style="{StaticResource Main}" 
+                                FontFamily="{StaticResource MediumFont}"
+                                HorizontalOptions="Start"
+                                FontSize="Large">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding HomepageCurrentWeatherData.temp_min_string}"/>
+                                    <Span Text="/"/>
+                                    <Span Text="{Binding HomepageCurrentWeatherData.temp_max_string}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout Margin="0,0,0,20"  
+                                sk:Skeleton.IsBusy="{Binding IsBusy}"
+                                sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                            sk:Skeleton.BackgroundColor="#3b3b3b">
+                        <renderedViews:HorizontalListView  
+                                    ItemHeight="100"
+                                    ItemWidth="80"
+                                    ItemsSource="{Binding HomepageCurrentWeatherDetails.hourly}"
+                                    SnapStyle="Center">
+                            <renderedViews:HorizontalListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Padding="20,0,0,0">
+                                            <Label Text="{Binding temp_string}" FontSize="Small" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding firstweather.description_totitle}" LineBreakMode="TailTruncation" FontSize="Small" HorizontalOptions="Center"/>
+                                            <Image Source="{Binding firstweather.iconurl}" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding dt_parsed, StringFormat='{0:hh:mm tt}'}" FontSize="Small" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </renderedViews:HorizontalListView.ItemTemplate>
+                        </renderedViews:HorizontalListView>
+                    </StackLayout>
+
+
+                    <Label Margin="20,0" Text="Daily Weather Report"  Style="{StaticResource Main}" FontSize="Large"  HorizontalOptions="Start"
+                            sk:Skeleton.IsBusy="{Binding IsBusy}"
+                            sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                        sk:Skeleton.BackgroundColor="#3b3b3b"/>
+
+                    <StackLayout Margin="20,0"
+                                 sk:Skeleton.IsBusy="{Binding IsBusy}"
+                                 sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                             sk:Skeleton.BackgroundColor="#3b3b3b">
+                        <CollectionView
+                            ItemsSource="{Binding HomepageCurrentWeatherDetails.daily}"
+                            VerticalOptions="FillAndExpand"
+                            VerticalScrollBarVisibility="Never"
+                            HeightRequest="320"
+                            IsEnabled="False">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0" Margin="10">
+                                        <Label Grid.Column="0" Text="{Binding dt_parsed, StringFormat='{0:MMM dd}'}" LineBreakMode="NoWrap" FontSize="Small" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="{Binding dt_parsed, StringFormat='{0:ddd}'}" LineBreakMode="NoWrap" FontSize="Small" VerticalOptions="Center"/>
+                                        <Image Grid.Column="2" Source="{Binding firstweather.iconurl}" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
+                                        <Label Grid.Column="3" Text="{Binding firstweather.description_totitle}" LineBreakMode="TailTruncation" FontSize="Small" VerticalOptions="Center"/>
+                                        <Label Grid.Column="4" LineBreakMode="NoWrap" FontSize="Small" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding temp.min_celsius}"/>
+                                                    <Span Text="/"/>
+                                                    <Span Text="{Binding temp.min_celsius}"/>
+                                                    <Span Text="°C"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+
+                    <Label Margin="20,0,20,20" Text="Weather Details"  Style="{StaticResource Main}"  FontSize="Large"  HorizontalOptions="Start" 
+                           sk:Skeleton.IsBusy="{Binding IsBusy}"
+                           sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                       sk:Skeleton.BackgroundColor="#3b3b3b"/>
+
+                    <Grid Margin="20,0" RowSpacing="20" ColumnSpacing="0"
+                          sk:Skeleton.IsBusy="{Binding IsBusy}"
+                          sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+	                      sk:Skeleton.BackgroundColor="#3b3b3b">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Row="0" Grid.Column="0" Source="humidity" HeightRequest="20" WidthRequest="20"/>
+                        <StackLayout Grid.Row="0" Grid.Column="1" >
+                            <Label Text="Humidity" />
+                            <Label Text="{Binding HomepageCurrentWeatherData.main.humidity_string}" FontSize="Small"  />
+                        </StackLayout>
+
+                        <Image Grid.Row="0" Grid.Column="2" Source="pressure" HeightRequest="20" WidthRequest="20"/>
+                        <StackLayout Grid.Row="0" Grid.Column="3">
+                            <Label Text="Pressure" />
+                            <Label Text="{Binding HomepageCurrentWeatherData.main.pressure_string}" FontSize="Small"  />
+                        </StackLayout>
+
+                        <Image Grid.Row="1" Grid.Column="0" Source="wind" HeightRequest="20" WidthRequest="20"/>
+                        <StackLayout Grid.Row="1" Grid.Column="1" >
+                            <Label Text="Wind"  />
+                            <Label Text="{Binding HomepageCurrentWeatherData.wind.speed}" FontSize="Small"  />
+                        </StackLayout>
+
+                        <Image Grid.Row="1" Grid.Column="2" Source="temperature" HeightRequest="20" WidthRequest="20"/>
+                        <StackLayout Grid.Row="1" Grid.Column="3">
+                            <Label Text="Temp"/>
+                            <Label Text="{Binding HomepageCurrentWeatherData.temp_string}" FontSize="Small"  />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+            
+            <Label
+                 sk:Skeleton.IsBusy="{Binding IsBusy}"
+                 sk:Skeleton.Animation="{sk:DefaultAnimation Fade}"
+                 sk:Skeleton.BackgroundColor="#3b3b3b"
+                Text="It's empty here" IsVisible="{Binding EmptyResultVisibility}" FontSize="Large" HorizontalOptions="Center"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

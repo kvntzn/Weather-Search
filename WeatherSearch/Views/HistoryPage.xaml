@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:control="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             mc:Ignorable="d"
+             x:Name="History"
+             ControlTemplate="{StaticResource PageWithGradient}"
+             x:Class="WeatherSearch.Views.HistoryPage"
+             NavigationPage.HasNavigationBar="False"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Margin="0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+                <control:TintedImage TintColor="White" Source="ic_back_arrow"  HeightRequest="40" WidthRequest="40"  >
+                    <control:TintedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackCommand}"/>
+                    </control:TintedImage.GestureRecognizers>
+                </control:TintedImage>
+
+                <Label Grid.Column="1" LineBreakMode="NoWrap" Text="Search Management" Style="{StaticResource Main}" FontSize="Large" FontAttributes="Bold"  VerticalOptions="Center"/>
+
+                <StackLayout Grid.Column="2" VerticalOptions="Center" Padding="0,0,10,0" >
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding InfoCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_more_vertical" />
+                </StackLayout>
+            </Grid>
+
+            <Grid Margin="20,20,20,0" ColumnSpacing="30">
+                <Frame Grid.Column="1" CornerRadius="10" Padding="0,5" HasShadow="False" BackgroundColor="#3b3b3b">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeleteAllCommand}"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="Clear" FontFamily="{StaticResource MediumFont}" FontSize="Small" TextColor="White" VerticalOptions="Center"/>
+                        <Image Source="ic_action_delete_dark" HeightRequest="30"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Grid.Column="0" CornerRadius="10" Padding="0,5" HasShadow="False" BackgroundColor="#3b3b3b">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GetLocationCommand}"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="Location" FontFamily="{StaticResource MediumFont}"  FontSize="Small" TextColor="White" VerticalOptions="Center"/>
+                        <control:TintedImage TintColor="White" Source="ic_action_location_on" HeightRequest="30"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+            
+            
+            <ListView x:Name="ItemsListView"
+                IsVisible="{Binding SearchResultVisibility}"
+                ItemsSource="{Binding StoredWeatherApiResponseData}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadCommand}"
+                IsPullToRefreshEnabled="False"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                HeightRequest="{Binding ListViewHeight}"
+                CachingStrategy="RecycleElement"
+                VerticalScrollBarVisibility="Never"
+                ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Margin="20,10" Padding="0" CornerRadius="10" BackgroundColor="Transparent" BorderColor="#3b3b3b">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Padding="20" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                        <Label 
+                                            Text="{Binding fullname}" 
+                                            LineBreakMode="NoWrap" 
+                                            Style="{StaticResource Main}"
+                                            FontSize="Large"
+                                            FontFamily="{StaticResource LightFont}"
+                                            HorizontalOptions="StartAndExpand"
+                                            />
+                                        <Label 
+                                            Text="{Binding temp_string}" 
+                                            LineBreakMode="NoWrap" 
+                                            Style="{StaticResource Main}"
+                                            FontSize="Large"
+                                            FontFamily="{StaticResource LightFont}"
+                                            />
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Center" BackgroundColor="#3b3b3b">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference History}}" CommandParameter="{Binding .}"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <control:TintedImage TintColor="White" Margin="10" Source="ic_action_delete" VerticalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Text="It's empty here." IsVisible="{Binding EmptyResultVisibility}" FontSize="Large" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

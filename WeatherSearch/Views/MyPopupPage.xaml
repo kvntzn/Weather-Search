@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherSearch.Views.MyPopupPage"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:control="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+              >
+    <pages:PopupPage.Animation>
+        <animations:MoveAnimation DurationIn="400"
+                                  DurationOut="300"
+                                  EasingIn="SpringOut"
+                                  EasingOut="SpringIn"
+                                  HasBackgroundAnimation="False"
+                                  PositionIn="Bottom"
+                                  PositionOut="Bottom"
+                                  />
+    </pages:PopupPage.Animation>
+    <StackLayout VerticalOptions="Center"  HorizontalOptions="CenterAndExpand" Padding="26,0">
+        <Frame BackgroundColor="White" CornerRadius="10" HasShadow="False" >
+            <StackLayout
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Start">
+
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal">
+                    <control:TintedImage TintColor="Black" Source="info" HeightRequest="20" WidthRequest="20"/>
+                    <Label Text="About" TextColor="Black" FontSize="Large" />
+                </StackLayout>
+
+                <StackLayout Padding="0,10,0,20" HorizontalOptions="FillAndExpand">
+                    <Label FontSize="Medium" TextColor="Black" CharacterSpacing="10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Developer: Kevin Tuazon,"/>
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+
+                                <Span Text="Webiste: "/>
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="https://kvntzn.github.io/" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnWebsiteTapped"/>
+                                </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+
+                                <Span Text="Credits: "/>
+                                <Span Text="{x:Static system:Environment.NewLine}"/>
+                                <Span Text="https://www.iconfinder.com/andhikairfani" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnIconCreditsTapped"/>
+                                    </Span.GestureRecognizers>
+                                 </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

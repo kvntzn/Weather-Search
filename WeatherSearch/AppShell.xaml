@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       mc:Ignorable="d"
+       xmlns:local="clr-namespace:WeatherSearch.Views"
+       Title="C_Test"
+       x:Class="WeatherSearch.AppShell">
+
+    <!-- 
+        Styles and Resources 
+    -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="NavigationPrimary">#8475cc</Color>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="Shell.ForegroundColor" Value="#000" />
+                <Setter Property="Shell.TitleColor" Value="#000" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#000"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="#FFFFFF"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary> 
+    </Shell.Resources>
+
+    <!-- Your Pages -->
+    <!--<Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid 
+              HeightRequest="200">
+                <Image Margin="20,0" Aspect="AspectFit"
+                   Source="https://19yw4b240vb03ws8qm25h366-wpengine.netdna-ssl.com/wp-content/uploads/openweather-negative-logo-RGB.png"
+                   WidthRequest="200" HeightRequest="90"
+                   />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>-->
+
+    <!--<FlyoutItem Title="OpenWeather" FlyoutDisplayOptions="AsMultipleItems">
+        <Tab FlyoutIcon="ic_action_search" Icon="ic_action_search" Title="Search">
+            <ShellContent  ContentTemplate="{DataTemplate local:ItemsPage}" />
+        </Tab>
+        <Tab Title="History" FlyoutIcon="ic_action_history" Icon="ic_action_history">
+            <ShellContent  ContentTemplate="{DataTemplate local:HistoryPage}" />
+        </Tab>
+    </FlyoutItem>-->
+    
+    <TabBar>
+        <Tab Title="Search" Icon="ic_action_search.png">
+            <ShellContent  Title="Search" ContentTemplate="{DataTemplate local:ItemsPage}"  />
+        </Tab>
+        <Tab Title="History" Icon="ic_action_history">
+            <ShellContent Title="History" ContentTemplate="{DataTemplate local:HistoryPage}" />
+        </Tab>
+    </TabBar>
+
+   
+    <!-- Optional Templates 
+    // These may be provided inline as below or as separate classes.
+
+    // This header appears at the top of the Flyout.
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid>ContentHere</Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    // ItemTemplate is for ShellItems as displayed in a Flyout
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <ContentView>
+                Bindable Properties: Title, Icon
+            </ContentView>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    // MenuItemTemplate is for MenuItems as displayed in a Flyout
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <ContentView>
+                Bindable Properties: Text, Icon
+            </ContentView>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    -->
+
+</Shell>

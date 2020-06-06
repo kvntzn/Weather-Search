@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:magicGradients="clr-namespace:MagicGradients;assembly=MagicGradients"
+             xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
+             mc:Ignorable="d"
+             x:Class="WeatherSearch.App">
+    <Application.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#99FFFFFF"/>
+            <Setter Property="FontFamily" Value="RegularFont"/>
+        </Style>
+        <Style x:Key="Main" TargetType="Label">
+            <Setter Property="TextColor" Value="#D9FFFFFF"/>
+            <Setter Property="FontFamily" Value="RegularFont"/>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="PlaceholderColor" Value="White"/>
+        </Style>
+        <ControlTemplate x:Key="PageWithGradient">
+            <Grid>
+                <magicGradients:GradientView VerticalOptions="FillAndExpand" >
+                    <magicGradients:GradientView.GradientSource>
+                        <magicGradients:CssGradientSource>
+                            <x:String>
+                                <![CDATA[
+                                        radial-gradient(circle at 16% 83%, rgba(148, 148, 148,0.06) 0%, rgba(148, 148, 148,0.06) 50%,rgba(63, 63, 63,0.06) 50%, rgba(63, 63, 63,0.06) 100%),radial-gradient(circle at 68% 87%, rgba(66, 66, 66,0.06) 0%, rgba(66, 66, 66,0.06) 50%,rgba(105, 105, 105,0.06) 50%, rgba(105, 105, 105,0.06) 100%),radial-gradient(circle at 38% 50%, rgba(123, 123, 123,0.06) 0%, rgba(123, 123, 123,0.06) 50%,rgba(172, 172, 172,0.06) 50%, rgba(172, 172, 172,0.06) 100%),linear-gradient(90deg, hsl(18,0%,1%),hsl(18,0%,1%))
+                                        ]]>
+                            </x:String>
+                        </magicGradients:CssGradientSource>
+                    </magicGradients:GradientView.GradientSource>
+                </magicGradients:GradientView>
+                <ContentPresenter />
+            </Grid>
+        </ControlTemplate>
+        <OnPlatform x:TypeArguments="x:String" x:Key="BoldFont">
+            <On Platform="Android" Value="Roboto-Bold.ttf#Roboto" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="RegularFont">
+            <On Platform="Android" Value="Roboto-Regular.ttf#Roboto" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="MediumFont">
+            <On Platform="Android" Value="Roboto-Medium.ttf#Roboto" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="LightFont">
+            <On Platform="Android" Value="Roboto-Light.ttf#Roboto" />
+        </OnPlatform>
+    </Application.Resources>
+</Application>
