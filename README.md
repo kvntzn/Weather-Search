@@ -1,6 +1,7 @@
 # Weather-Search
 Weather forecast information via searching the location or by selecting the current location.
 
+# Implemented
 <ul>
 <li>Mvvm pattern.</li>
 <li>Xaml DataBinding </li>
