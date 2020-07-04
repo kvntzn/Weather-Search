@@ -59,7 +59,14 @@ namespace WeatherSearch.ViewModels
 
             Task.Run(async () =>
             {
-                await ExecuteLoadItemsCommand();
+                if (_homepageCurrentWeatherData == null && _homepageCurrentWeatherDetails == null)
+                {
+                    await ExecuteSearchCommand("Mabalacat City");
+                }
+                else
+                { 
+                    await ExecuteLoadItemsCommand();
+                }
             });            
 
             MessagingCenter.Subscribe<WeatherApiResonseData>(this, "LoadData", async (obj) =>
@@ -173,6 +180,7 @@ namespace WeatherSearch.ViewModels
                 {
                     _homepageCurrentWeatherData = LocalDataRepository.GetHomePageWeatherData();
                     _homepageCurrentWeatherDetails = LocalDataRepository.GetHomePageWeatherDetails();
+
 
                     OnPropertyChanged("HomepageCurrentWeatherDetails");
                     OnPropertyChanged("HomepageCurrentWeatherData");
